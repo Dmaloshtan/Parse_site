@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,17 +36,22 @@ public class WorkInBrowser {
     }
 //TODO может убрать в другой класс или переименовать в этот
 
-    public void outputData() throws InterruptedException {
+    public Map<String, String> outputData() throws InterruptedException {
         Map<WebElement, WebElement> data = new HashMap<>();
-        List<WebElement> info = driver.findElements(By.className("field-name"));
-        List<WebElement> value = driver.findElements(By.className("expanding-box_content"));
-        for(int i = 0; i<info.size(); i++){
+        List<WebElement> field = driver.findElements(By.className("field-name"));
+        List<WebElement> content = driver.findElements(By.className("expanding-box_content"));
 
-            System.out.println(info.get(i).getText() + " " + value.get(i).getText());
+        Map<String, String> infoAndValue = new HashMap<>();
+        for (int i = 0; i < field.size(); i++) {
+//            System.out.println(field.get(i).getText());
+            String info = field.get(i).getText();
+            String value = content.get(i).getText();
+            infoAndValue.put(info,value);
+
+//            System.out.println(field.get(i).getText() + " " + content.get(i).getText());
         }
+        return infoAndValue;
     }
-
-
 
     public void stop() {
         driver.quit();
