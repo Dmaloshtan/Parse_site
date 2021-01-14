@@ -23,6 +23,10 @@ public class WorkInBrowser {
         wait = new WebDriverWait(driver, 10);
     }
 
+    public void clearField(){
+        driver.findElement(By.className("type-ahead-select")).clear();
+    }
+
     public void navigateToSite(String url) {
         driver.navigate().to(url);
         driver.findElement(By.className("tutorial-button-outline")).click(); // выключает обучение на сайте росреестра
@@ -37,7 +41,6 @@ public class WorkInBrowser {
 //TODO может убрать в другой класс или переименовать в этот
 
     public Map<String, String> outputData() throws InterruptedException {
-        Map<WebElement, WebElement> data = new HashMap<>();
         List<WebElement> field = driver.findElements(By.className("field-name"));
         List<WebElement> content = driver.findElements(By.className("expanding-box_content"));
 

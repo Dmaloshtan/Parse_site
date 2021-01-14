@@ -20,7 +20,7 @@ public class WorkInExcel {
 
     private String outputPath;
     private String inputPath;
-    private HSSFWorkbook outputBook;
+    private HSSFWorkbook outputBook;  //TODO переделать всё на XSSFWorkbook, тогда будет читать xlsx.
     private HSSFWorkbook inputBook;
     private Sheet sheet;
     private Row row;
@@ -31,24 +31,33 @@ public class WorkInExcel {
         this.outputPath = pathOfParseData;
     }
 
-    public void setInWorkBook(Map<String, String> inData) throws FileNotFoundException, IOException {
+    public void setInWorkBook(Map<String, String> inData, int rowForObjectInfo) throws FileNotFoundException, IOException {
 
-        int rowInFile = 0;
+        int rowForColumn = 0;
 
         outputBook = new HSSFWorkbook();
-        sheet = outputBook.createSheet("Данные с Росреестра");
+        sheet = outputBook.createSheet("Данные с Росреестра"); //TODO создание листа и заполнение шапки нужно вынести в отдельный метод, чтобы это делалось только один раз
 
+        // Создание шапки с наименованием столбцов
+        Map<String, Integer> numberOfColumns = InfoOfObject.getNumbersOfColumn();
+        row = sheet.createRow(rowForColumn);
+
+        for (String columnName : numberOfColumns.keySet()) {
+            Cell nameOfColumns = row.createCell(numberOfColumns.get(columnName));
+            nameOfColumns.setCellValue(columnName);
+        }
+
+        // Помещаем значения в ячейки
+        row = sheet.createRow(rowForObjectInfo);
         for (String key : inData.keySet()) {
-            row = sheet.createRow(rowInFile);
-            Cell infoInput = row.createCell(0);
-            Cell valueInput = row.createCell(1);
-            infoInput.setCellValue(key);
+            Cell valueInput = row.createCell(InfoOfObject.getNumberOfOneColumn(key));
             valueInput.setCellValue(inData.get(key));
-            rowInFile++;
         }
         outputBook.write(new FileOutputStream(outputPath));
         outputBook.close();
     }
+
+    //TODO читает только значения из первой строки. Доделать, чтобы читались все строки по очереди
 
     public List<String> readFromFirstBook() throws FileNotFoundException, IOException {
         int numberOfCell = 0;
@@ -58,20 +67,19 @@ public class WorkInExcel {
         HSSFRow row = dataSheet.getRow(numberOfRow);
         List<String> cadastreNumbers = new ArrayList<>();
 
-        try{
-//            HSSFCell cell = row.getCell(numberOfCell);
-            while (!(dataSheet.getRow(numberOfRow).getCell(numberOfCell)==null)){
+//TODO переделать на CELLItarator https://poi.apache.org/apidocs/dev/org/apache/poi/xssf/streaming/SXSSFRow.CellIterator.html
 
-                if ((dataSheet.getRow(numberOfRow).getCell(numberOfCell)==null)){
-                    break;
-                }
+        try {
+//            HSSFCell cell = row.getCell(numberOfCell);
+            while (!(dataSheet.getRow(numberOfRow).getCell(numberOfCell) == null)) {
+
 
                 String cadastreNumber = row.getCell(numberOfCell).getStringCellValue();
                 cadastreNumbers.add(cadastreNumber);
                 numberOfRow++;
             }
 
-        } catch (NullPointerException ex){
+        } catch (NullPointerException ex) {
             System.out.println("Все данные прочитаны");
         }
 
