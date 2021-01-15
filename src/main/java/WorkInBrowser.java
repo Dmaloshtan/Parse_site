@@ -13,17 +13,16 @@ import java.util.concurrent.TimeUnit;
 public class WorkInBrowser {
 
     private WebDriver driver;
-    private WebDriverWait wait;
 
 //TODO обработать исключения
 
     public void start() {
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
     }
 
-    public void clearField(){
+    public void clearField() {
         driver.findElement(By.className("type-ahead-select")).clear();
     }
 
@@ -46,12 +45,9 @@ public class WorkInBrowser {
 
         Map<String, String> infoAndValue = new HashMap<>();
         for (int i = 0; i < field.size(); i++) {
-//            System.out.println(field.get(i).getText());
             String info = field.get(i).getText();
             String value = content.get(i).getText();
-            infoAndValue.put(info,value);
-
-//            System.out.println(field.get(i).getText() + " " + content.get(i).getText());
+            infoAndValue.put(info, value);
         }
         return infoAndValue;
     }

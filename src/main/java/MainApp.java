@@ -1,41 +1,42 @@
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class MainApp {
 
     public static void main(String[] args) throws InterruptedException, IOException {
 
         String url = "https://pkk.rosreestr.ru";
-        String outputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\Parse_Rosreestr.xls";
-        String inputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\CadastreData.xls";
+        String outputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\Parse_Rosreestr1.xlsx";
+        String inputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\CadastreData1.xlsx";
 
-        WorkInExcel excel = new WorkInExcel(inputFile,outputFile);
-        List<String> cadastreNumbers = excel.readFromFirstBook();
+        IncomingData incomingData = new IncomingData(inputFile);
+        incomingData.readFile();
+        incomingData.stop();
+        List<String> cadastreNumbers = incomingData.getCadastreNumbers();
 
         WorkInBrowser driver = new WorkInBrowser();
         driver.start();
         driver.navigateToSite(url);
 
-        int rowForObjectInfo = 1;
+        OutputData info = new OutputData(outputFile);
+        info.setTemplateOFHeaders();
 
-        for(String number : cadastreNumbers){
+        Map<String, String> valueData;
+
+        int row = 1;
+
+        for (String cadastreNumber : cadastreNumbers) {
             driver.clearField();
-            Thread.sleep(2000);
-            driver.inputAndSearchData(number);
-            Thread.sleep(3000);
-            excel.setInWorkBook(driver.outputData(),rowForObjectInfo);
-            rowForObjectInfo++;
+            Thread.sleep(1000);
+            driver.inputAndSearchData(cadastreNumber);
+            Thread.sleep(1000);
+            valueData = driver.outputData();
+            info.setInfoToWorkBook(valueData, row);
+            row++;
         }
-
+        info.write();
+        info.stop();
         driver.stop();
-
-
-
     }
 }
