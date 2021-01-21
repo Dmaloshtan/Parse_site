@@ -35,7 +35,7 @@ public class WorkInBrowser {
         driver.findElement(By.className("type-ahead-select")).sendKeys(cadastreNumber);
         Thread.sleep(500);
         List<WebElement> elements = driver.findElements(By.cssSelector("svg[xmlns='http://www.w3.org/2000/svg']"));
-        elements.get(82).click();
+        elements.get(86).click();
     }
 //TODO может убрать в другой класс или переименовать в этот
 

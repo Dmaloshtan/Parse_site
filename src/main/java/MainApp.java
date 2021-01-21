@@ -24,16 +24,13 @@ public class MainApp {
 
         Map<String, String> valueData;
 
-        int row = 1;
-
         for (String cadastreNumber : cadastreNumbers) {
             driver.clearField();
             Thread.sleep(1000);
             driver.inputAndSearchData(cadastreNumber);
             Thread.sleep(1000);
             valueData = driver.outputData();
-            info.setInfoToWorkBook(valueData, row);
-            row++;
+            info.setInfoToWorkBook(valueData);
         }
         info.write();
         info.stop();

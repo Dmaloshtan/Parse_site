@@ -20,6 +20,7 @@ public class OutputData {
     private String path;
     private XSSFWorkbook outputBook;  //TODO переделать всё на XSSFWorkbook, тогда будет читать xlsx.
     private Sheet sheet;
+    private int rowToWrite = 1;
 
     public OutputData(String path) throws IOException {
         outputBook = new XSSFWorkbook();
@@ -44,18 +45,19 @@ public class OutputData {
         }
     }
 
-    public void setInfoToWorkBook(Map<String, String> inData, int rowForObjectInfo) throws FileNotFoundException, IOException {
+    public void setInfoToWorkBook(Map<String, String> inData) throws FileNotFoundException, IOException {
 
-        Row rowForData = sheet.createRow(rowForObjectInfo);
+        Row rowForData = sheet.createRow(rowToWrite);
 
         for (String key : inData.keySet()) {
             if (!template.containsKey(key)) {
-                System.out.println("В кадастровой карте новое значение, которого нет в шапке экселя");
-                break;
+                System.out.println("В кадастровой карте новое значение, которого нет в шапке экселя: \"" + key + "\" нужно добавить и запустить программу заново");
+                continue;
             }
             Cell valueInput = rowForData.createCell(template.get(key));
             valueInput.setCellValue(inData.get(key));
         }
+        rowToWrite++;
     }
 
     public void write() throws IOException {
