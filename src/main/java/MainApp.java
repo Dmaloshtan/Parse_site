@@ -4,25 +4,32 @@ import java.util.Map;
 
 public class MainApp {
 
+    private static String url = "https://pkk.rosreestr.ru";
+    private static String outputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\Parse_Rosreestr1.xlsx";
+    private static String inputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\CadastreData1.xlsx";
+    private static List <String> cadastreNumbers;
+    private static WorkInBrowser driver;
+    private static IncomingData incomingData;
+    private static OutputData infoFromSite;
+    private static Map<String, String> valueData;
+
     public static void main(String[] args) throws InterruptedException, IOException {
 
-        String url = "https://pkk.rosreestr.ru";
-        String outputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\Parse_Rosreestr1.xlsx";
-        String inputFile = "C:\\Users\\Дмитрий\\IdeaProjects\\Parsing_rosreestr\\CadastreData1.xlsx";
-
-        IncomingData incomingData = new IncomingData(inputFile);
+        incomingData = new IncomingData(inputFile);
         incomingData.readFile();
         incomingData.stop();
-        List<String> cadastreNumbers = incomingData.getCadastreNumbers();
+        cadastreNumbers = incomingData.getCadastreNumbers();
 
-        WorkInBrowser driver = new WorkInBrowser();
+        driver = new WorkInBrowser();
         driver.start();
         driver.navigateToSite(url);
 
-        OutputData info = new OutputData(outputFile);
-        info.setTemplateOFHeaders();
+        infoFromSite = new OutputData(outputFile);
+        infoFromSite.setTemplateOFHeaders();
 
-        Map<String, String> valueData;
+
+
+        //TODO измерить скорость работы до внедрения многопоточности и после!!!
 
         for (String cadastreNumber : cadastreNumbers) {
             driver.clearField();
@@ -30,10 +37,15 @@ public class MainApp {
             driver.inputAndSearchData(cadastreNumber);
             Thread.sleep(1000);
             valueData = driver.outputData();
-            info.setInfoToWorkBook(valueData);
+            infoFromSite.setInfoToWorkBook(valueData);
         }
-        info.write();
-        info.stop();
+
+//TODO в потоке для записи должна быть логика, чтобы он не начинал писать,
+// пока в map на запишет данные первый поток (для этого join и synchronized как в тесте) Сделать флажок на зпись,
+// чтобы данные брались, только после того, как они там появились
+
+        infoFromSite.write();
+        infoFromSite.stop();
         driver.stop();
     }
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 public class OutputData {
     private Map<String, Integer> template;
     private String path;
-    private XSSFWorkbook outputBook;  //TODO переделать всё на XSSFWorkbook, тогда будет читать xlsx.
+    private XSSFWorkbook outputBook;
     private Sheet sheet;
     private int rowToWrite = 1;
 
