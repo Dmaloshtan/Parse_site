@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class IncomingData {
-    private List<String> cadastreNumbers;
+    private List<String> cadastreNumbers; //TODO в абстрактный класс
     private XSSFWorkbook readBook;
 
     public IncomingData(String path) throws IOException {

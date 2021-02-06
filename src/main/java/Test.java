@@ -19,7 +19,6 @@ public class Test {
         notifyAll();
     }
 
-
     public synchronized void dec(){
         while(!isWrite){
             try {
@@ -34,7 +33,6 @@ public class Test {
         notifyAll();
     }
 
-
     public static void main(String[] args) {
         Test test = new Test();
 
@@ -44,7 +42,7 @@ public class Test {
                 for (int i = 0; i < 100; i++) {
                     test.inc();
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -58,7 +56,7 @@ public class Test {
                 for (int i = 0; i < 100; i++) {
                     test.dec();
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
