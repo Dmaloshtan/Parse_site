@@ -1,3 +1,6 @@
+package OutputData;
+
+import incomingData.CadastreNumbers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,11 +13,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class WorkInBrowser {
+public class BrowserChromeDriver implements BrowserDriver {
+
+    private String url;
 
     private WebDriver driver;
+    private CadastreNumbers cadastreNumbers;
 
-//TODO обработать исключения
+    public BrowserChromeDriver(String url) {
+        this.url = url;
+    }
 
     public void start() {
         driver = new ChromeDriver();
@@ -31,13 +39,12 @@ public class WorkInBrowser {
         driver.findElement(By.className("tutorial-button-outline")).click(); // выключает обучение на сайте росреестра
     }
 
-    public void inputAndSearchData(String cadastreNumber) throws InterruptedException {
+    public void inputAndSearch(String cadastreNumber) throws InterruptedException {
         driver.findElement(By.className("type-ahead-select")).sendKeys(cadastreNumber);
         Thread.sleep(500);
         List<WebElement> elements = driver.findElements(By.cssSelector("svg[xmlns='http://www.w3.org/2000/svg']"));
         elements.get(85).click();
     }
-//TODO может убрать в другой класс или переименовать в этот
 
     public Map<String, String> outputData() throws InterruptedException {
         List<WebElement> field = driver.findElements(By.className("field-name"));
@@ -52,9 +59,31 @@ public class WorkInBrowser {
         return infoAndValue;
     }
 
+
+    public List<RealEstateObject> outputDataAboutRealEstateObject(List<String> cadastrenumbers) {
+       List<RealEstateObject> realEstateObjects = new ArrayList<>();
+        start();
+        navigateToSite(url);
+        for (String str : cadastrenumbers) {
+            clearField();
+
+            try {
+                Thread.sleep(1000);
+                inputAndSearch(str);
+                Thread.sleep(1000);
+                Map<String, String> infoAboutObject = outputData();
+                RealEstateObject realEstateObject = new RealEstateObject(str, infoAboutObject);
+                realEstateObjects.add(realEstateObject);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        stop();
+        return realEstateObjects;
+    }
+
     public void stop() {
         driver.quit();
         driver = null;
     }
-
 }

@@ -87,22 +87,22 @@ public class MainApp {
         /*
         Методы без многопоточности
          */
-//
-//        for (String cadastreNumber : cadastreNumbers) {
-//            driver.clearField();
-//            Thread.sleep(1000);
-//            driver.inputAndSearchData(cadastreNumber);
-//            Thread.sleep(1000);
 
-//            oneInfoFromRosreestr = driver.outputData();
-//            infoFromSite.setInfoToWorkBook(oneInfoFromRosreestr);
-//        }
+        for (String cadastreNumber : cadastreNumbers) {
+            driver.clearField();
+            Thread.sleep(1000);
+            driver.inputAndSearchData(cadastreNumber);
+            Thread.sleep(1000);
 
-//        infoFromSite.write();
-//        infoFromSite.stop();
-//        driver.stop();
-//
-//        System.out.println(System.currentTimeMillis() - l);
+            oneInfoFromRosreestr = driver.outputData();
+            infoFromSite.setInfoToWorkBook(oneInfoFromRosreestr);
+        }
+
+        infoFromSite.write();
+        infoFromSite.stop();
+        driver.stop();
+
+        System.out.println(System.currentTimeMillis() - l);
 
 //TODO в потоке для записи должна быть логика, чтобы он не начинал писать,
 // пока в map на запишет данные первый поток (для этого join и synchronized как в тесте) Сделать флажок на зпись,
@@ -132,35 +132,35 @@ public class MainApp {
         Здесь многопоточность
          */
 
-        Thread searchData = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (String cadastreNumber : cadastreNumbers) {
-                    mainApp.search(cadastreNumber);
-                }
-            }
-        });
-
-        Thread writeData = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                for (String cadastreNumber : cadastreNumbers) {
-                    mainApp.writeInfo();
-                }
-            }
-        });
-
-        searchData.start();
-        writeData.start();
-        searchData.join();
-        writeData.join();
-        System.out.println("111111");
-        infoFromSite.write();
-        infoFromSite.stop();
-        driver.stop();
-
-        System.out.println(System.currentTimeMillis() - l);
-
+//        Thread searchData = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (String cadastreNumber : cadastreNumbers) {
+//                    mainApp.search(cadastreNumber);
+//                }
+//            }
+//        });
+//
+//        Thread writeData = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                for (String cadastreNumber : cadastreNumbers) {
+//                    mainApp.writeInfo();
+//                }
+//            }
+//        });
+//
+//        searchData.start();
+//        writeData.start();
+//        searchData.join();
+//        writeData.join();
+//        System.out.println("111111");
+//        infoFromSite.write();
+//        infoFromSite.stop();
+//        driver.stop();
+//
+//        System.out.println(System.currentTimeMillis() - l);
+//
     }
 }
