@@ -1,20 +1,21 @@
 package OutputData;
 
+import domain.Estate;
 import incomingData.CadastreNumbers;
 
 import java.util.List;
 
 public class ParseData {
     CadastreNumbers cadastreNumbers;
-    List<RealEstateObject> realEstateObjects;
+    List<Estate> estates;
     BrowserDriver browserDriver;
 
     public ParseData(CadastreNumbers cadastreNumbers) {
         this.cadastreNumbers = cadastreNumbers;
     }
 
-    public List<RealEstateObject> getRealEstateObjects() {
-        return realEstateObjects;
+    public List<Estate> getRealEstateObjects() {
+        return estates;
     }
 
     public void setBrowserDriver(BrowserDriver browserDriver) {
@@ -22,6 +23,6 @@ public class ParseData {
     }
 
     public void executeBrowserSearch(){
-        realEstateObjects = browserDriver.outputDataAboutRealEstateObject(cadastreNumbers.getCadastreNumbers());
+        estates = browserDriver.outputDataAboutRealEstateObject(cadastreNumbers.getCadastreNumbers());
     }
 }

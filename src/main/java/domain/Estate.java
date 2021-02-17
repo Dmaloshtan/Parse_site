@@ -2,13 +2,16 @@ package domain;
 
 import java.util.Map;
 
-public class RealEstateObject {
+public class Estate {
 
     private String cadastreNumber;
 
     private Map<String, String> infoAboutObject;
 
-    public RealEstateObject(String cadastreNumber, Map<String, String> infoAboutObject) {
+    public Estate() {
+    }
+
+    public Estate(String cadastreNumber, Map<String, String> infoAboutObject) {
         this.cadastreNumber = cadastreNumber;
         this.infoAboutObject = infoAboutObject;
     }

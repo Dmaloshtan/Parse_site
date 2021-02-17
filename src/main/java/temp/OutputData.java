@@ -1,18 +1,13 @@
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.opc.OPCPackage;
+package temp;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class OutputData {
@@ -28,7 +23,7 @@ public class OutputData {
     }
 
 //    public void test1(){
-//        template = InfoOfObject.getNumbersOfColumn();
+//        template = temp.InfoOfObject.getNumbersOfColumn();
 //        System.out.println(template.toString());
 //        System.out.println(template.size());
 //    }

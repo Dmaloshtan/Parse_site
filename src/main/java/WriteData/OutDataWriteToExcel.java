@@ -1,7 +1,7 @@
 package WriteData;
 
 import OutputData.ParseData;
-import OutputData.RealEstateObject;
+import domain.Estate;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -29,6 +29,7 @@ public class OutDataWriteToExcel implements OutDataWrite{
     public void setTemplateOFHeaders() {
         int rowForColumn = 0;
         sheet = outputBook.createSheet("Данные с Росреестра");
+        sheet.autoSizeColumn(15);
         template = InfoForTemplate.getNumbersOfColumn();
         Row rowForHeader = sheet.createRow(rowForColumn);
 
@@ -63,7 +64,7 @@ public class OutDataWriteToExcel implements OutDataWrite{
 
     public void writeInfo() throws IOException {
         setTemplateOFHeaders();
-        for(RealEstateObject mapsAboutEstate : parseData.getRealEstateObjects()){
+        for(Estate mapsAboutEstate : parseData.getRealEstateObjects()){
             setInfoToWorkBook(mapsAboutEstate.getInfoAboutObject());
         }
         write();

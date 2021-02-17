@@ -1,5 +1,6 @@
 package OutputData;
 
+import domain.Estate;
 import incomingData.CadastreNumbers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +34,7 @@ public class BrowserChromeDriver implements BrowserDriver {
     public void clearField() {
         driver.findElement(By.className("type-ahead-select")).clear();
     }
-
+    //TODO прописать условие, если есть окошко то кликаем, если нет, то работаем дальше
     public void navigateToSite(String url) {
         driver.navigate().to(url);
         driver.findElement(By.className("tutorial-button-outline")).click(); // выключает обучение на сайте росреестра
@@ -60,8 +61,8 @@ public class BrowserChromeDriver implements BrowserDriver {
     }
 
 
-    public List<RealEstateObject> outputDataAboutRealEstateObject(List<String> cadastrenumbers) {
-       List<RealEstateObject> realEstateObjects = new ArrayList<>();
+    public List<Estate> outputDataAboutRealEstateObject(List<String> cadastrenumbers) {
+       List<Estate> estates = new ArrayList<>();
         start();
         navigateToSite(url);
         for (String str : cadastrenumbers) {
@@ -72,14 +73,14 @@ public class BrowserChromeDriver implements BrowserDriver {
                 inputAndSearch(str);
                 Thread.sleep(1000);
                 Map<String, String> infoAboutObject = outputData();
-                RealEstateObject realEstateObject = new RealEstateObject(str, infoAboutObject);
-                realEstateObjects.add(realEstateObject);
+                Estate estate = new Estate(str, infoAboutObject);
+                estates.add(estate);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         stop();
-        return realEstateObjects;
+        return estates;
     }
 
     public void stop() {
