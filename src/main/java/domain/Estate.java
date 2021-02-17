@@ -1,4 +1,4 @@
-package OutputData;
+package domain;
 
 import java.util.Map;
 
