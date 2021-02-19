@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -26,7 +27,10 @@ public class BrowserChromeDriver implements BrowserDriver {
     }
 
     public void start() {
-        driver = new ChromeDriver();
+        ChromeOptions op = new ChromeOptions();
+//        op.addArguments("--headless");
+        op.addArguments("--start-maximized");
+        driver = new ChromeDriver(op);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebDriverWait wait = new WebDriverWait(driver, 10);
     }
@@ -42,7 +46,7 @@ public class BrowserChromeDriver implements BrowserDriver {
 
     public void inputAndSearch(String cadastreNumber) throws InterruptedException {
         driver.findElement(By.className("type-ahead-select")).sendKeys(cadastreNumber);
-        Thread.sleep(500);
+        Thread.sleep(1000);
         List<WebElement> elements = driver.findElements(By.cssSelector("svg[xmlns='http://www.w3.org/2000/svg']"));
         elements.get(85).click();
     }
@@ -69,9 +73,9 @@ public class BrowserChromeDriver implements BrowserDriver {
             clearField();
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 inputAndSearch(str);
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 Map<String, String> infoAboutObject = outputData();
                 Estate estate = new Estate(str, infoAboutObject);
                 estates.add(estate);

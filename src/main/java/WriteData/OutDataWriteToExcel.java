@@ -44,6 +44,7 @@ public class OutDataWriteToExcel implements OutDataWrite{
         Row rowForData = sheet.createRow(rowToWrite);
 
         for (String key : inData.keySet()) {
+
             if (!template.containsKey(key)) {
                 System.out.println("В кадастровой карте новое значение, которого нет в шапке экселя: \"" + key + "\" нужно добавить и запустить программу заново");
                 continue;

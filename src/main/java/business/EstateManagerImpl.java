@@ -15,6 +15,14 @@ public class EstateManagerImpl implements EstateManager {
         this.dao = dao;
     }
 
+    public void deleteTable(){
+        dao.deleteTable();
+    }
+
+    public void createTable(){
+        dao.createTable();
+    }
+
 
     @Override
     public List<Estate> getEstateList(EstateFilter filter) {
@@ -25,6 +33,5 @@ public class EstateManagerImpl implements EstateManager {
     @Override
     public void addEstate(Estate estate) {
         dao.addEstate(estate);
-
     }
 }

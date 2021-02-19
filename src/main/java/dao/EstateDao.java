@@ -11,4 +11,8 @@ public interface EstateDao {
 
     public void addEstate(Estate estate);
 
+    public void deleteTable();  //TODO убрать в другое место
+
+    public void createTable();  //TODO убрать в другое место
+
 }

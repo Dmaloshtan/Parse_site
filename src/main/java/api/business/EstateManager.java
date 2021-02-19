@@ -8,6 +8,7 @@ import java.util.List;
 public interface EstateManager {
 
     List<Estate> getEstateList(EstateFilter filter);
+
     void addEstate(Estate estate);
 
 

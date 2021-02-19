@@ -31,4 +31,12 @@ public class Estate {
     public void setCadastreNumber(String cadastreNumber) {
         this.cadastreNumber = cadastreNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Estate{" +
+                "cadastreNumber='" + cadastreNumber + '\'' +
+                ", infoAboutObject=" + infoAboutObject +
+                '}';
+    }
 }
