@@ -1,7 +1,6 @@
 package OutputData;
 
 import domain.Estate;
-import incomingData.CadastreNumbers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,9 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class BrowserChromeDriver implements BrowserDriver {
 
     private String url;
-
     private WebDriver driver;
-    private CadastreNumbers cadastreNumbers;
 
     public BrowserChromeDriver(String url) {
         this.url = url;
@@ -65,8 +62,8 @@ public class BrowserChromeDriver implements BrowserDriver {
     }
 
 
-    public List<Estate> outputDataAboutRealEstateObject(List<String> cadastrenumbers) {
-       List<Estate> estates = new ArrayList<>();
+    public List<Estate> outputDataAboutEstate(List<String> cadastrenumbers) {
+        List<Estate> estates = new ArrayList<>();
         start();
         navigateToSite(url);
         for (String str : cadastrenumbers) {

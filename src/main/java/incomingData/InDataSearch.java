@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface InDataSearch {
 
-    List<String> addData();
+    List<String> getCadastrNumbers();
 
 }

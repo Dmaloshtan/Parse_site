@@ -11,6 +11,10 @@ public class Estate {
     public Estate() {
     }
 
+    public Estate(String cadastreNumber) {
+        this.cadastreNumber = cadastreNumber;
+    }
+
     public Estate(String cadastreNumber, Map<String, String> infoAboutObject) {
         this.cadastreNumber = cadastreNumber;
         this.infoAboutObject = infoAboutObject;

@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class InDataSearchFromSystem implements InDataSearch{
 
     @Override
-    public List<String> addData() {
+    public List<String> getCadastrNumbers() {
         ArrayList<String> inData = new ArrayList<>();
 
         Scanner sc = new Scanner(System.in);

@@ -19,7 +19,7 @@ public class InDataSearchFromExcel implements InDataSearch {
     }
 
     @Override
-    public List<String> addData() {
+    public List<String> getCadastrNumbers() {
         try {
             readBook = new XSSFWorkbook(new FileInputStream(path));
         } catch (IOException e) {

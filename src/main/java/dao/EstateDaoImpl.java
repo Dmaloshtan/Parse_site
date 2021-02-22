@@ -63,6 +63,7 @@ public class EstateDaoImpl implements EstateDao {
             Connection con = getConnection();
             try {
                 PreparedStatement pst = con.prepareStatement(DROP);
+                pst.executeUpdate();
                 pst.close();
             } finally {
                 con.close();
@@ -77,7 +78,7 @@ public class EstateDaoImpl implements EstateDao {
             Connection con = getConnection();
             try {
                 PreparedStatement pst = con.prepareStatement(CREATE);
-
+                pst.executeUpdate();
                 pst.close();
             } finally {
                 con.close();
