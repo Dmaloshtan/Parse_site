@@ -15,11 +15,8 @@ public class EstateDaoImplTest {
     public void testGetEstateList(){
         EstateManagerImpl em = new EstateManagerImpl();
         EstateDaoImpl dao = new EstateDaoImpl();
-        ConnectionBuilderImpl con = new ConnectionBuilderImpl("org.postgresql.Driver",
-                "jdbc:postgresql://localhost/rosreestr_parse", "postgres", "postgres");
         em.setDao(dao);
-        dao.setConnectionBuilder(con);
-
+        dao.setConnectionBuilder(new DirectConnectionBuilder());
         em.getEstateList(null);
 
     }
@@ -28,10 +25,8 @@ public class EstateDaoImplTest {
     public void testAddEstateList(){
         EstateManagerImpl em = new EstateManagerImpl();
         EstateDaoImpl dao = new EstateDaoImpl();
-        ConnectionBuilderImpl con = new ConnectionBuilderImpl("org.postgresql.Driver",
-                "jdbc:postgresql://localhost/rosreestr_parse", "postgres", "postgres");
         em.setDao(dao);
-        dao.setConnectionBuilder(con);
+        dao.setConnectionBuilder(new DirectConnectionBuilder());
 
         Estate estate = new Estate();
         estate.setCadastreNumber("77:1:4014:25");
@@ -43,7 +38,16 @@ public class EstateDaoImplTest {
         map.put("Кадастровая стоимость:", "143 007 560 руб.");
         estate.setInfoAboutObject(map);
         em.addEstate(estate);
+    }
 
+    @Test
+    public void testDeleteTable(){
+        EstateManagerImpl em = new EstateManagerImpl();
+        EstateDaoImpl dao = new EstateDaoImpl();
+        ConnectionBuilderImpl con = new ConnectionBuilderImpl("org.postgresql.Driver",
+                "jdbc:postgresql://localhost/rosreestr_parse", "postgres", "postgres");
+        em.setDao(dao);
+        dao.setConnectionBuilder(con);
     }
 
 

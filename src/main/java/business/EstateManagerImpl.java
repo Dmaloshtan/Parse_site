@@ -19,8 +19,8 @@ public class EstateManagerImpl implements EstateManager {
         dao.deleteTable();
     }
 
-    public void createTable(){
-        dao.createTable();
+    public void alterSequence(){
+        dao.alterSequence();
     }
 
 
