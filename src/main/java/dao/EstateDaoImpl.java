@@ -110,6 +110,7 @@ public class EstateDaoImpl implements EstateDao {
 
                 for (String key : column.keySet()) {
                     int paramIndex = column.get(key) + 1;
+
                     if (!map.containsKey(key)) {
                         pst.setString(paramIndex, "-");
                         continue;

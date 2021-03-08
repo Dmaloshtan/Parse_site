@@ -26,7 +26,7 @@ public class BrowserChromeDriver implements BrowserDriver {
 
     public void start() {
         ChromeOptions op = new ChromeOptions();
-//        op.addArguments("--headless");
+        op.addArguments("--headless");
         op.addArguments("--start-maximized");
         driver = new ChromeDriver(op);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -45,7 +45,14 @@ public class BrowserChromeDriver implements BrowserDriver {
     //TODO прописать условие, если есть окошко то кликаем, если нет, то работаем дальше
     public void navigateToSite(String url) {
         driver.navigate().to(url);
-        driver.findElement(By.className("tutorial-button-outline")).click(); // выключает обучение на сайте росреестра
+
+//        List<WebElement> tutorial = driver.findElements(By.className("tutorial-button-outline"));
+//        System.out.println(tutorial.size());
+//        boolean isPresent = driver.findElements(By.className("tutorial-button-outline")).size() > 0;
+//
+//        if(isPresent){
+//            driver.findElement(By.className("tutorial-button-outline")).click(); // выключает обучение на сайте росреестра
+//        }
     }
 
 
@@ -107,15 +114,19 @@ public class BrowserChromeDriver implements BrowserDriver {
         WebElement body = driver.findElement(By.className("detail-info-body"));
         body.click();
 
-        //TODO проверить на видимость элемента (если скролл не появился, значит листать и не надо)
 
         // Проверяем, есть ли скролл на странице, если да, то выполняем скроллинг
         boolean isPresent = driver.findElements(By.className("scrollbar")).size() > 0;
-
         /* --------------------------------------------------- */
         if(isPresent){
 
+            WebElement scrollField = driver.findElement(By.className("vue-scrollbar__scrollbar-vertical"));
             WebElement scroll = driver.findElement(By.className("scrollbar"));
+
+            int heightScrollField = scrollField.getSize().getHeight();
+            int heightScroll = scroll.getSize().getHeight();
+
+            int offsetY = heightScrollField - heightScroll;
 /*
 Прокручиваем скролл вниз
 * */
@@ -124,7 +135,7 @@ public class BrowserChromeDriver implements BrowserDriver {
             actions.moveToElement(body).perform();
 
             Thread.sleep(400);
-            actions.moveToElement(scroll).clickAndHold().moveByOffset(0, 300).perform();
+            actions.moveToElement(scroll).clickAndHold().moveByOffset(0, offsetY).perform(); //TODO проскролить в самый низ
 
 //Получаем новые значения
             List<WebElement> fieldAdd = driver.findElements(By.className("field-name"));

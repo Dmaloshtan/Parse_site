@@ -3,6 +3,8 @@ package WriteData;
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO добавить площадь общая (в том числе и в базу данных)
+
 public class InfoForTemplate {
     public static final Map<String, Integer> NUMBERS_OF_COLUMN = new HashMap<>() {{
         put("Кадастровый номер:", 0);
@@ -23,7 +25,7 @@ public class InfoForTemplate {
         put("Разрешенное использование:", 15);
         put("по документу:", 16);
         put("Наименование:", 17);
-        put("Общая площадь:", 18);
+        put("Площадь общая:", 18);
         put("Назначение:", 19);
         put("Количество этажей (в том числе подземных):", 20);
         put("Количество подземных этажей:", 21);
